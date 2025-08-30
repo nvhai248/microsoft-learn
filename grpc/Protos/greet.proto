@@ -8,6 +8,7 @@ package greet;
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc GreetNewEmployee(Employee) returns (HelloReply);
 }
 
 // The request message containing the user's name.
@@ -18,4 +19,12 @@ message HelloRequest {
 // The response message containing the greetings.
 message HelloReply {
   string message = 1;
+}
+
+// The employee request.
+message Employee {
+  string name = 1;
+  int32 empID = 2;
+  string department = 3;
+  bool isNewEmployee = 4;
 }
