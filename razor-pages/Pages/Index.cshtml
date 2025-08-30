@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Web page";
+    ViewData["ViewMessage"] = "This is the test message";
+
+    var thanksMessage = "Thank you for learning that";
+
+    string Greeting()
+    {
+        return ViewData["ViewMessage"] + " concac " + thanksMessage;
+    }
+}
+
+<div class="text-center">
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>@ViewData["ViewMessage"]</p>
+    <p>@thanksMessage</p>
+
+    @if (Model.ShowGreeting)
+    {
+        <p>@Greeting()</p>
+    }
+
+    <h3>Here is some other project:</h3>
+    <ul>
+        @for (int i = 0; i < Model.OtherProjectTypes.Length; i++)
+        {
+            <li>@Model.OtherProjectTypes[i]</li>
+        }
+
+        @foreach (var type in Model.OtherProjectTypes)
+        {
+            <li>@type</li>
+        }
+    </ul>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/site.js"></script>
+}
+
+@section Wellcome
+{
+    <h1 class="display-4">Welcome</h1>
+}

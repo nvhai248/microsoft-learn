@@ -1,0 +1,13 @@
+﻿@page "{name?}/{id?}"
+@model razor_pages.Namespace.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h1>Greeting from HR index page.</h1>
+
+@if (@Model.Name is not null)
+{
+    <h3>Wellcome @Model.Name to join this page</h3>
+    <h4>Your ID: @Model.ID</h4>
+}

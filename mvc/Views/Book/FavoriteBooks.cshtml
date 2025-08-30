@@ -1,0 +1,21 @@
+@model mvc.Models.FavoriteBooks
+
+<h2>My Favorite Books</h2>
+
+<ul>
+    @foreach (var book in Model.Library)
+    {
+        <li>@book</li>
+    }
+</ul>
+
+<h3>Add a New Favorite</h3>
+<form asp-action="AddToFavorites" method="post">
+    <select name="selectedBook">
+        @foreach (var book in (string[])ViewBag.AllBooks)
+        {
+            <option value="@book">@book</option>
+        }
+    </select>
+    <button type="submit">Add</button>
+</form>

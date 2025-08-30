@@ -1,0 +1,13 @@
+@model mvc.Models.Books;
+
+<h3>All Book</h3>
+
+<p>@(Model == null ? "Model is null" : "Model is not null")</p>
+<p>@(Model?.Titles == null ? "Titles is null" : "Titles has " + Model.Titles.Length + " items")</p>
+
+<ul>
+    @foreach (var book in Model.Titles)
+    {
+        <li>@book</li>
+    }
+</ul>
