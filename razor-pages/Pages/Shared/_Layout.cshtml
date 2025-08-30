@@ -29,10 +29,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Info/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Engineering" asp-page="/WebDev">Engieering WebDev</a>
+                            <a class="nav-link text-dark" asp-area="Engineering" asp-page="/WebDev">Engieering
+                                WebDev</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="HR" asp-page="/Index">HR Index</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MessageBoard">Messages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/ChatBoard">Chat Board</a>
                         </li>
                     </ul>
                 </div>
@@ -55,8 +62,10 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/signalr.min.js"></script>
 
+    @RenderSection("MessageBoard", required: false)
+    @RenderSection("ChatBoard", required: false)
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

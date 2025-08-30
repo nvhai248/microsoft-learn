@@ -1,0 +1,19 @@
+@page
+
+<div class="text-center">
+    <div>Message <input type="text" id="messageInput" />
+        <input type="button" name="button" id="send" value="Send Message">
+    </div>
+</div>
+
+<hr />
+
+<div class="text-center" id="newMessages">
+    <h3>New Messages</h3>
+</div>
+
+@section MessageBoard
+{
+    <h3 class="text-center">Welcome to the message board!</h3>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}
