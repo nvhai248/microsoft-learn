@@ -9,6 +9,8 @@
 *.sln.docstates
 *.userprefs
 
+.env
+
 # Build results (apply to all subfolders)
 **/[Bb]in/
 **/[Oo]bj/

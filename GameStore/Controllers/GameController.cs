@@ -1,51 +1,82 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using GameStore.Data;
 using GameStore.Dtos;
+using GameStore.Models;
 
-namespace GameStore.Controllers
+namespace GameStore.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class GamesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class GamesController : ControllerBase
+    private readonly GameStoreContext _context;
+
+    public GamesController(GameStoreContext context)
     {
-        private static readonly List<GameDto> games = new()
+        _context = context;
+    }
+
+    // GET api/games
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<GameDto>>> GetAll()
+    {
+        var games = await _context.Games
+            .Select(g => new GameDto(
+                g.Id,
+                g.Name,
+                g.Genre,
+                g.Price,
+                g.ReleaseDate
+            ))
+            .ToListAsync();
+
+        return Ok(games);
+    }
+
+    // GET api/games/5
+    [HttpGet("{id}", Name = "GetGame")]
+    public async Task<ActionResult<GameDto>> Get(int id)
+    {
+        var game = await _context.Games.FindAsync(id);
+
+        if (game is null)
+            return NotFound();
+
+        var dto = new GameDto(
+            game.Id,
+            game.Name,
+            game.Genre,
+            game.Price,
+            game.ReleaseDate
+        );
+
+        return Ok(dto);
+    }
+
+    // POST api/games
+    [HttpPost]
+    public async Task<ActionResult<GameDto>> Create(CreateGameDto newGame)
+    {
+        var game = new Game
         {
-            new GameDto(1, "The Legend of Zelda: Breath of the Wild", "Adventure", 59.99m, new DateOnly(2017, 3, 3)),
-            new GameDto(2, "God of War Ragnarök", "Action", 69.99m, new DateOnly(2022, 11, 9)),
-            new GameDto(3, "Red Dead Redemption 2", "Open World", 49.99m, new DateOnly(2018, 10, 26)),
-            new GameDto(4, "Minecraft", "Sandbox", 26.95m, new DateOnly(2011, 11, 18)),
-            new GameDto(5, "Elden Ring", "RPG", 59.99m, new DateOnly(2022, 2, 25)),
-            new GameDto(6, "Cyberpunk 2077", "RPG", 39.99m, new DateOnly(2020, 12, 10)),
-            new GameDto(7, "Super Mario Odyssey", "Platform", 59.99m, new DateOnly(2017, 10, 27)),
-            new GameDto(8, "Hollow Knight", "Metroidvania", 14.99m, new DateOnly(2017, 2, 24)),
-            new GameDto(9, "Grand Theft Auto V", "Action", 29.99m, new DateOnly(2013, 9, 17)),
-            new GameDto(10, "The Witcher 3: Wild Hunt", "RPG", 39.99m, new DateOnly(2015, 5, 19))
+            Name = newGame.Name,
+            Genre = newGame.Genre,
+            Price = newGame.Price,
+            ReleaseDate = newGame.ReleaseDate
         };
 
-        [HttpGet]
-        public IEnumerable<GameDto> GetAll() => games;
+        _context.Games.Add(game);
+        await _context.SaveChangesAsync();
 
-        [HttpGet("{id}", Name = "GetGame")]
-        public ActionResult<GameDto?> Get(int id)
-        {
-            var game = games.FirstOrDefault(g => g.Id == id);
-            return game is null ? NotFound() : Ok(game);
-        }
+        var dto = new GameDto(
+            game.Id,
+            game.Name,
+            game.Genre,
+            game.Price,
+            game.ReleaseDate
+        );
 
-        [HttpPost]
-        public ActionResult<GameDto> Create(CreateGameDto newGame)
-        {
-            var game = new GameDto(
-                games.Count + 1,
-                newGame.Name,
-                newGame.Genre,
-                newGame.Price,
-                newGame.ReleaseDate
-            );
-
-            games.Add(game);
-
-            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
-        }
+        return CreatedAtRoute("GetGame", new { id = game.Id }, dto);
     }
 }

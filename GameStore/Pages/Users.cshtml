@@ -1,0 +1,32 @@
+﻿@page
+@model GameStore.Pages.UserModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+
+<div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="accounts" role="tabpanel">
+        <h4>Accounts List</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var acc in Model.Accounts)
+                {
+                    <tr>
+                        <td>@acc.Id</td>
+                        <td>@acc.Username</td>
+                        <td>@acc.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
