@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using GameStore.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -10,7 +11,12 @@ builder.Logging.AddConsole();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
-builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, option =>
+    {
+        option.LoginPath = "/Index";
+        option.AccessDeniedPath = "/Denined";
+    });
 
 // Get connection string
 builder.Services.AddDbContext<GameStoreContext>(options =>
@@ -55,6 +61,7 @@ app.Use(async (context, next) =>
 });
 
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 // API endpoints

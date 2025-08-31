@@ -1,22 +1,53 @@
 ﻿@page
 @model GameStore.Pages.IndexModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login / Register";
 }
 
 <div class="row justify-content-center">
-    <div class="col-md-4">
-        <h2 class="text-center">Login</h2>
-        <form method="post">
-            <div class="mb-3">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" />
+    <div class="col-md-5">
+
+        <!-- Login Form -->
+        <div id="loginForm" class="@(Model.ShowRegister ? "d-none" : "")">
+            <h2 class="text-center">Login</h2>
+            <form method="post" asp-page-handler="Login">
+                <div class="mb-3">
+                    <label asp-for="LoginUsername" class="form-label">Username</label>
+                    <input asp-for="LoginUsername" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="LoginPassword" class="form-label">Password</label>
+                    <input asp-for="LoginPassword" type="password" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="text-center mt-3">
+                <a asp-page="/Index" asp-route-register="true">Don't have an account? Register</a>
             </div>
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="@(Model.ShowRegister ? "" : "d-none")">
+            <h2 class="text-center">Register</h2>
+            <form method="post" asp-page-handler="Register">
+                <div class="mb-3">
+                    <label asp-for="RegisterUsername" class="form-label">Username</label>
+                    <input asp-for="RegisterUsername" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RegisterEmail" class="form-label">Email</label>
+                    <input asp-for="RegisterEmail" type="email" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RegisterPassword" class="form-label">Password</label>
+                    <input asp-for="RegisterPassword" type="password" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-success w-100">Register</button>
+            </form>
+            <div class="text-center mt-3">
+                <a asp-page="/Index" asp-route-register="false">Already have an account? Login</a>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
+        </div>
+
     </div>
 </div>

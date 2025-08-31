@@ -28,6 +28,17 @@
                             </li>
                         }
                     </ul>
+                    @if (Context.Request.Path.Value != "/")
+                    {
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Profile">
+                                    <i class="bi bi-person-circle"></i> Profile
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
                 </div>
             </div>
         </nav>
