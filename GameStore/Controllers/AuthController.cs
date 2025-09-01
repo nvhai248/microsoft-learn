@@ -4,6 +4,8 @@ using GameStore.Data;
 using GameStore.Dtos;
 using GameStore.Models;
 using GameStore.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace GameStore.Controllers;
 
@@ -49,21 +51,29 @@ public class AuthController : ControllerBase
         return Ok(new { token });
     }
 
-    [HttpPost("verify")]
-    public IActionResult Verify([FromBody] string token)
+    [HttpGet("profile")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> GetProfile()
     {
-        var principal = JwtHelper.VerifyToken(token);
-        if (principal == null)
+        var username = User.Identity?.Name;
+        if (string.IsNullOrEmpty(username))
         {
-            return Unauthorized("Invalid or expired token");
+            return Unauthorized("Invalid token: username not found");
+        }
+        var user = await _context.Users
+        .FirstOrDefaultAsync(u => u.Username == username);
+
+        if (user == null)
+        {
+            return NotFound("User not found");
         }
 
         return Ok(new
         {
             Message = "Token is valid",
-            User = principal.Identity?.Name,
-            Claims = principal.Claims.Select(c => new { c.Type, c.Value })
+            UserId = user.Id,
+            user.Username,
+            user.Email
         });
     }
-
 }

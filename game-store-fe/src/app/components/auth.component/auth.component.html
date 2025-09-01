@@ -1,1 +1,54 @@
-<p>auth.component works!</p>
+<h2>Authentication</h2>
+
+@if (!isLoggedIn) {
+  <div class="auth-form">
+    <h3>{{ isLoginMode ? 'Login' : 'Register' }}</h3>
+
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+      @if (!isLoginMode) {
+        <div>
+          <label for="username">Username</label>
+          <input id="username" type="text" [(ngModel)]="registerData.username" name="username" required/>
+        </div>
+      }
+
+      <div>
+        <label for="email">Email</label>
+
+        @if (isLoginMode) {
+          <input id="email" type="email" [(ngModel)]="loginData.email" name="loginEmail" required/>
+        } @else {
+          <input id="email" type="email" [(ngModel)]="registerData.email" name="registerEmail" required/>
+        }
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+
+        @if (isLoginMode) {
+          <input id="password" type="password" [(ngModel)]="loginData.password" name="loginPassword" required/>
+        } @else {
+          <input id="password" type="password" [(ngModel)]="registerData.password" name="registerPassword" required/>
+        }
+      </div>
+
+      <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>
+    </form>
+
+    @if (errorMessage) {
+      <div class="status error">{{ errorMessage }}</div>
+    }
+
+    <p>
+      <a href="#" (click)="toggleMode(); $event.preventDefault()">
+        {{ isLoginMode ? "Don't have an account? Register" : "Already have an account? Login" }}
+      </a>
+    </p>
+  </div>
+} @else {
+  <div class="profile">
+    <h3>Welcome, {{ userProfile?.username }}</h3>
+    <p>Email: {{ userProfile?.email }}</p>
+    <button (click)="logout()">Logout</button>
+  </div>
+}

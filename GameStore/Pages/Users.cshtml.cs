@@ -1,20 +1,26 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GameStore.Models;
+using GameStore.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Pages;
 
 [Authorize]
 public class UserModel : PageModel
 {
+    private readonly GameStoreContext _context;
+
+    [ActivatorUtilitiesConstructor]
+    public UserModel(GameStoreContext context)
+    {
+        _context = context;
+    }
+
     public List<User> Accounts { get; set; } = new();
 
-    public void OnGet()
+    public async Task OnGetAsync()
     {
-        Accounts = new List<User>
-        {
-            new User { Username = "admin", Email = "admin@example.com" },
-            new User { Username = "user1", Email = "user1@example.com" }
-        };
+        Accounts = await _context.Users.ToListAsync();
     }
 }
