@@ -2,6 +2,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using GameStore.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -17,6 +20,35 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.LoginPath = "/Index";
         option.AccessDeniedPath = "/Denined";
     });
+
+// Load AppConstant from configuration
+AppConstant.Init(builder.Configuration);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = AppConstant.Jwt.Issuer,
+            ValidAudience = AppConstant.Jwt.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.Jwt.SecretKey))
+        };
+    });
+
+// ✅ Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Get connection string
 builder.Services.AddDbContext<GameStoreContext>(options =>
@@ -49,6 +81,9 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+// Enable CORS middleware
+app.UseCors("AllowAngularDev");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
