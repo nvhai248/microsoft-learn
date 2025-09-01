@@ -1,0 +1,50 @@
+h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #333;
+  text-align: center;
+}
+
+.status {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.status.error {
+  color: #d9534f;
+}
+
+.game-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-table thead {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.game-table th,
+.game-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.game-table tbody tr:hover {
+  background-color: #f4f8fc;
+  transition: background-color 0.2s ease;
+}
+
+.game-table td {
+  color: #444;
+}
+
+.game-table th {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}

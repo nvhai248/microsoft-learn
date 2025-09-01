@@ -1,0 +1,30 @@
+<h2>Games</h2>
+
+@if (loading) {
+  <div class="status">Loading games...</div>
+} @else if (error) {
+  <div class="status error">{{ error }}</div>
+} @else {
+  <table class="game-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Release Date</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (game of games; track game.id) {
+        <tr>
+          <td>{{ game.id }}</td>
+          <td>{{ game.name }}</td>
+          <td>{{ game.genre }}</td>
+          <td>${{ game.price }}</td>
+          <td>{{ game.releaseDate }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
