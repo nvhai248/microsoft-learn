@@ -13,6 +13,7 @@
       <th>Genre</th>
       <th>Price</th>
       <th>Release Date</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,9 @@
           <td>{{ game.genre }}</td>
           <td>${{ game.price }}</td>
           <td>{{ game.releaseDate }}</td>
+          <td>
+            <button (click)="wishGame(game.id)">Wish</button>
+          </td>
         </tr>
       }
     </tbody>

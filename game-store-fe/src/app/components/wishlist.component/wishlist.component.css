@@ -1,0 +1,71 @@
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.status {
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.status.error {
+  background: #ffe6e6;
+  color: #c0392b;
+  border: 1px solid #e74c3c;
+}
+
+.wishlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.wishlist-table th,
+.wishlist-table td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.wishlist-table thead {
+  background: #34495e;
+  color: #fff;
+}
+
+.wishlist-table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.wishlist-table tbody tr:hover {
+  background: #ecf0f1;
+  transition: background 0.2s ease-in-out;
+}
+
+.badge {
+  display: inline-block;
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}

@@ -1,1 +1,42 @@
-<p>wishlist.component works!</p>
+<h2>Your Wishlist</h2>
+
+@if (loading) {
+  <div class="status">Loading wishlist...</div>
+} @else if (error) {
+  <div class="status error">{{ error }}</div>
+} @else if (wishlist.length === 0) {
+  <div class="status">No items in wishlist</div>
+} @else {
+  <table class="wishlist-table">
+    <thead>
+    <tr>
+      <th>Game</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Release Date</th>
+      <th>Wish Count</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (wish of wishlist; track wish.gameId) {
+        <tr>
+          <td>
+            <strong>{{ wish.game?.name }}</strong>
+          </td>
+          <td>{{ wish.game?.genre }}</td>
+          <td>${{ wish.game?.price }}</td>
+          <td>{{ wish.game?.releaseDate }}</td>
+          <td>
+            <span class="badge">{{ wish.wishCount }}</span>
+          </td>
+          <td>
+            <button class="btn-delete" (click)="deleteWish(wish.gameId)">
+              ✖ Remove
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
