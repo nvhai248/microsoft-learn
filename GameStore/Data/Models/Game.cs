@@ -7,4 +7,6 @@ public class Game
     public string Genre { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public DateOnly ReleaseDate { get; set; }
+
+    public ICollection<WishList> WishLists { get; set; } = new List<WishList>();
 }
