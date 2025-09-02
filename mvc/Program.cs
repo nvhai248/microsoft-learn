@@ -1,7 +1,13 @@
+using mvc.Interfaces;
+using mvc.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IAppConfigService, AppConfigService>();
+builder.Services.AddTransient<IRandomService, RandomService>();
+builder.Services.AddScoped<IRequestTrackingService, RequestTrackingService>();
 
 var app = builder.Build();
 

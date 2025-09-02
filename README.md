@@ -52,3 +52,32 @@ Prevent Authentication Attack:
 ### Cors
 
 Attacker use third-party applications and tools to access your application.
+
+## Dependency Injection
+
+### Service lifetimes in ASP.NET Core
+
+1. Singleton
+
+- Created once per application and reused for all requests and all users
+- Lives for the entire app lifetime.
+- ⚠️ Must be thread-safe, since it’s shared.
+- Example: caching, configuration providers.
+
+2. Scoped
+
+- Created once per HTTP request.
+- Same instance is reused throughout that request.
+- Perfect for EF Core DbContext.
+- Example: business services that depend on request data.
+
+3. Transient
+
+- Created every time it’s requested.
+- Short-lived.
+- Good for lightweight, stateless services.
+
+Note:
+- Singleton can depend on: Singleton, Transient
+- Scoped can depend on: Scoped, Singleton, Transient
+- Transient can depend on: Anything (Scoped, Singleton, Transient)
